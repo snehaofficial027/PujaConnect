@@ -5,7 +5,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import Navbar from "./components/TempNavbar";
+import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import SearchBooking from "./components/SearchBooking";
 import PopularPujas from "./components/PopularPujas";
