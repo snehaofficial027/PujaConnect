@@ -3,7 +3,7 @@ import API from "../config/api";
 import { Star, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "./TempNavbar";
 import PanditSearchBar from "./PanditSearchBar";
 
 const AllPandits = ({ onBookClick }) => {
