@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API from "../../config/api";
+import API from "../config/api";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import {

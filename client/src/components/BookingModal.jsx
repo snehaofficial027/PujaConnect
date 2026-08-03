@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import API from "../../config/api";
+import API from "../config/api";
 import { X, Lock } from "lucide-react";
 
 const BookingModal = ({

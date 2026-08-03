@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import API from "../../config/api";
+import API from "../config/api";
 import {
   User,
   Mail,
