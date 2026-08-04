@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
-import axios from "axios";
+import API from "../config/api";
 
 const Contact = () => {
   const [form, setForm] = useState({

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-const res = await API.get("/api/admin/bookings");
+import API from "../../config/api";
 import AdminLayout from "../../components/admin/AdminLayout";
 import {
   Trash2,
@@ -26,21 +26,24 @@ const AdminContact = () => {
   };
 
   useEffect(() => {
-    fetchMessages();
+  const fetchMessages = async () => {
+    try {
+      const res = await API.get("/api/contact");
+      setMessages(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    const interval = setInterval(() => {
-      fetchMessages();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
+  fetchMessages();
+}, []);
 
   const deleteMessage = async (id) => {
     if (!window.confirm("Delete this message?")) return;
 
     try {
      await API.delete(`/api/contact/${id}`);
-     
+
       fetchMessages();
     } catch (err) {
       console.log(err);
