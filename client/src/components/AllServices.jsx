@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import API from "../config/api";
-
 const AllServices = ({ onBookClick }) => {
   const [pujas, setPujas] = useState([]);
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-API.get("/api/pandits")
+import API from "../config/api";
 import { Star, X } from "lucide-react";
 
 const ReviewModal = ({ booking, user, onClose, onSuccess }) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../config/api";
 import { Check, X, Shield, UserCheck, Calendar, Briefcase, RefreshCw } from "lucide-react";
 
 const Dashboard = () => {

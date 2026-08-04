@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API from "../config/api";
+import API from "../../config/api";
 import { useNavigate, Link } from "react-router-dom";
 import { User, Mail, Phone, Lock, ArrowRight } from "lucide-react";
 

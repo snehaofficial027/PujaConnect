@@ -6,7 +6,7 @@ import {
   Bell,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import API from "../config/api";
+import API from "../../config/api";
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
