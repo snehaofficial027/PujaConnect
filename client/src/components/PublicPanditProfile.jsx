@@ -10,10 +10,10 @@ import {
 } from "lucide-react";
 
 const localImages = {
-  "Pandit Harish Vyas": "/img/pandit/p1.jpg",
-  "Shastri Mukund Pandya": "/img/pandit/p2.png",
-  "Rajesh Sharma": "/img/pandit/p3.webp",
-  "Acharya Ramesh Joshi": "/img/pandit/p4.jpg",
+  "Pandit Harish Vyas": "/images/pandits/pandit1.jpg",
+  "Shastri Mukund Pandya": "/images/pandits/pandit2.png",
+  "Rajesh Sharma": "/images/pandits/pandit3.webp",
+  "Acharya Ramesh Joshi": "/images/pandits/pandit4.jpg",
 };
 
 const PublicPanditProfile = ({ onBookClick }) => {

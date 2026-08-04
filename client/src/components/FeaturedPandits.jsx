@@ -9,11 +9,12 @@ import {
 
 // Local fallback images (public/img/pandit)
 const localImages = [
-  "/img/pandit/p1.jpg",
-  "/img/pandit/p2.png",
-  "/img/pandit/p3.webp",
-  "/img/pandit/p4.jpg",
+  "/images/pandits/pandit1.jpg",
+  "/images/pandits/pandit2.png",
+  "/images/pandits/pandit3.webp",
+  "/images/pandits/pandit4.jpg",
 ];
+
 
 const FeaturedPandits = ({ pandits = [], onBookClick }) => {
   const defaultPandits = [
@@ -89,7 +90,7 @@ const FeaturedPandits = ({ pandits = [], onBookClick }) => {
     ? pandit.image
     : `${import.meta.env.VITE_API_URL}/${pandit.image.replace(/^\/+/, "")}`
   : localImages[index % localImages.length];
-  
+
   return (
                 
               <div
