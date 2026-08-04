@@ -64,24 +64,17 @@ const user = JSON.parse(localStorage.getItem("user"));
     },
   ];
 
-  useEffect(() => {
+ useEffect(() => {
   API.get("/api/pandits")
     .then((res) => {
-      console.table(
-  res.data.map((p) => ({
-    name: p.name,
-    image: p.image,
-  }))
-);
+      console.log("TOTAL PANDITS =", res.data.length);
+      console.log("FULL DATA =", res.data);
+      console.table(res.data);
 
-      if (res.data.length > 0) {
-        setPandits(res.data);
-      } else {
-        setPandits(defaultPandits);
-      }
+      setPandits(res.data);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       setPandits(defaultPandits);
     });
 }, []);
