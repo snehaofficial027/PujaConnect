@@ -67,15 +67,18 @@ const user = JSON.parse(localStorage.getItem("user"));
  useEffect(() => {
   API.get("/api/pandits")
     .then((res) => {
-      console.log("TOTAL PANDITS =", res.data.length);
-      console.log("FULL DATA =", res.data);
-      console.table(res.data);
+      console.table(
+        res.data.map((p) => ({
+          name: p.name,
+          image: p.image,
+        }))
+      );
 
       setPandits(res.data);
     })
     .catch((err) => {
-      console.error(err);
-      setPandits(defaultPandits);
+      console.error("Error fetching pandits:", err);
+      setPandits([]);
     });
 }, []);
 
@@ -185,10 +188,19 @@ console.log(
     {/* Image */}
    <div className="relative h-64 overflow-hidden bg-gray-100">
 
- <img
-  src={`${API.defaults.baseURL}/${pandit.image.replace(/^\/?/, "")}`}
+<img
+  src={
+    pandit.image
+      ? pandit.image.startsWith("http")
+        ? pandit.image
+        : `${import.meta.env.VITE_API_URL}${pandit.image.startsWith("/") ? "" : "/"}${pandit.image}`
+      : "/images/pandits/pandit1.jpg"
+  }
   alt={pandit.name}
   className="w-full h-full object-cover object-top"
+  onError={(e) => {
+    e.target.src = "/images/pandits/pandit1.jpg";
+  }}
 />
 
   <span className="absolute top-3 left-3 bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded-full">
@@ -250,7 +262,7 @@ console.log(
      image: pandit.image
   ? pandit.image.startsWith("http")
     ? pandit.image
-    : `${API.defaults.baseURL}/${pandit.image.replace(/^\/?/, "")}`
+    : `${import.meta.env.VITE_API_URL}${pandit.image.startsWith("/") ? "" : "/"}${pandit.image}`
   : "/images/pandits/pandit1.jpg",
     },
   }}
