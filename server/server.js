@@ -42,10 +42,23 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // ⚡ GLOBAL MIDDLEWARE (ફક્ત એક જ વાર પ્રોપર સેટિંગ સાથે)
-app.use(cors({ 
-  origin: 'http://localhost:5173', 
-  credentials: true 
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://puja-connect-beta.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use(
