@@ -164,7 +164,8 @@ const PanditProfile = () => {
 
               <div className="lg:w-1/3 flex flex-col items-center">
 
-  <img
+  {/* ✅ ૧૦૦% આખી ઈમેજ બતાવવા માટે આ કોડ પેસ્ટ કરો */}
+<img
   src={
     profile.image
       ? profile.image.startsWith("http")
@@ -173,7 +174,7 @@ const PanditProfile = () => {
       : "/images/pandits/pandit1.jpg"
   }
   alt={profile.name}
- className="w-44 h-44 rounded-2xl object-cover object-top border-4 border-orange-200 shadow-lg"
+  className="w-44 h-44 rounded-2xl object-contain bg-orange-50 border-4 border-orange-200 shadow-lg p-1"
   onError={(e) => {
     e.target.src = "/images/pandits/pandit1.jpg";
   }}
