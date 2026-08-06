@@ -165,20 +165,19 @@ const PanditProfile = () => {
               <div className="lg:w-1/3 flex flex-col items-center">
 
   <img
-   src={
-  profile.image
-    ? profile.image.startsWith("http")
-      ? profile.image
-      : `${import.meta.env.VITE_API_URL}/${profile.image}`
-    : "/images/pandits/pandit1.jpg"
-}
-
-    alt={profile.name}
-    className="w-44 h-44 rounded-full object-cover border-4 border-orange-200 shadow-lg"
-    onError={(e) => {
-      e.target.src = "/images/pandits/pandit1.jpg";
-    }}
-  />
+  src={
+    profile.image
+      ? profile.image.startsWith("http")
+        ? profile.image
+        : `${import.meta.env.VITE_API_URL}/${profile.image}`
+      : "/images/pandits/pandit1.jpg"
+  }
+  alt={profile.name}
+ className="w-44 h-44 rounded-2xl object-cover object-top border-4 border-orange-200 shadow-lg"
+  onError={(e) => {
+    e.target.src = "/images/pandits/pandit1.jpg";
+  }}
+/>
 
   <label className="mt-5 cursor-pointer bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-xl flex items-center gap-2">
     <Camera size={18} />
