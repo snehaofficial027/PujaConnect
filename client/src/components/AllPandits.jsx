@@ -70,20 +70,23 @@ const AllPandits = ({ onBookClick }) => {
   };
 
   useEffect(() => {
-    API.get("/api/pandits")
-      .then((res) => {
-        const data = res.data?.pandits || res.data;
-        if (Array.isArray(data) && data.length > 0) {
-          setPandits(data);
-        } else {
-          setPandits(defaultPandits);
-        }
-      })
-      .catch((err) => {
-        console.error("Error fetching pandits, loading default data:", err);
+  API.get("/api/pandits")
+    .then((res) => {
+      // સર્વર ડેટા res.data માં આવે છે કે res.data.pandits માં તે ચેક કરશે
+      const apiData = Array.isArray(res.data) ? res.data : res.data?.pandits;
+
+      if (apiData && apiData.length > 0) {
+        setPandits(apiData);
+      } else {
+        console.warn("API returned empty array, falling back to dummy data");
         setPandits(defaultPandits);
-      });
-  }, []);
+      }
+    })
+    .catch((err) => {
+      console.error("Error fetching pandits, loading default data:", err);
+      setPandits(defaultPandits); // API ફેલ જાય તો ડમી ડેટા સેટ થશે
+    });
+}, []);
 
   // Dynamic Cities
   const cities = [
