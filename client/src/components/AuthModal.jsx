@@ -23,13 +23,20 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
     phone: "",
   });
 
-  // ૧. મોડલ ખુલ્લું હોય ત્યારે બૅકગ્રાઉન્ડ સ્ક્રોલ બંધ રાખવું
+  // ૧. મોડલ ખુલ્લું હોય ત્યારે બૅકગ્રાઉન્ડ સ્ક્રોલ બંધ રાખવું & ફોર્મ ખાલી કરવું
   useEffect(() => {
     document.body.style.overflow = "hidden";
+    setFormData({ name: "", email: "", password: "", phone: "" });
+
     return () => {
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  // ૨. User અને Admin ટેબ બદલાય કે Sign In / Sign Up સ્વિચ થાય ત્યારે ફોર્મ સાફ કરવું
+  useEffect(() => {
+    setFormData({ name: "", email: "", password: "", phone: "" });
+  }, [loginType, isLogin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,18 +45,12 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
       if (isLogin) {
         // ================= USER LOGIN =================
         if (loginType === "user") {
-          const res = await API.post(
-  "/api/auth/login",
-            {
-              email: formData.email,
-              password: formData.password,
-            }
-          );
+          const res = await API.post("/api/auth/login", {
+            email: formData.email,
+            password: formData.password,
+          });
 
-          localStorage.setItem(
-            "user",
-            JSON.stringify(res.data)
-          );
+          localStorage.setItem("user", JSON.stringify(res.data));
 
           onLoginSuccess(res.data);
           alert("User Login Successful");
@@ -59,23 +60,13 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
         }
 
         // ================= ADMIN LOGIN =================
-       const res = await API.post(
-  "/api/admin-auth/login",
-  {
-    email: formData.email,
-    password: formData.password,
-  }
-);
+        const res = await API.post("/api/admin-auth/login", {
+          email: formData.email,
+          password: formData.password,
+        });
 
-        localStorage.setItem(
-          "adminToken",
-          res.data.token
-        );
-
-        localStorage.setItem(
-          "admin",
-          JSON.stringify(res.data.admin)
-        );
+        localStorage.setItem("adminToken", res.data.token);
+        localStorage.setItem("admin", JSON.stringify(res.data.admin));
 
         alert("Admin Login Successful");
 
@@ -85,38 +76,27 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
       }
 
       // ================= SIGNUP =================
-      const res = await API.post(
-  "/api/auth/register",
-  {
-    name: formData.name,
-    email: formData.email,
-    password: formData.password,
-    phone: formData.phone,
-  }
-);
+      const res = await API.post("/api/auth/register", {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+      });
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(res.data)
-      );
+      localStorage.setItem("user", JSON.stringify(res.data));
 
       onLoginSuccess(res.data);
       alert("Account Created Successfully");
 
       if (onClose) onClose();
-
     } catch (err) {
       console.log(err);
-      alert(
-        err.response?.data?.message ||
-          "Something went wrong"
-      );
+      alert(err.response?.data?.message || "Something went wrong");
     }
   };
 
   const handleGoogleAuth = () => {
-   window.location.href =
-  `${API.defaults.baseURL}/api/auth/google`;
+    window.location.href = `${API.defaults.baseURL}/api/auth/google`;
   };
 
   return (
@@ -147,9 +127,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
               type="button"
               onClick={() => setLoginType("user")}
               className={`flex-1 py-2 rounded-lg font-semibold transition ${
-                loginType === "user"
-                  ? "bg-orange-600 text-white"
-                  : ""
+                loginType === "user" ? "bg-orange-600 text-white" : ""
               }`}
             >
               User
@@ -159,9 +137,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
               type="button"
               onClick={() => setLoginType("admin")}
               className={`flex-1 py-2 rounded-lg font-semibold flex items-center justify-center gap-2 transition ${
-                loginType === "admin"
-                  ? "bg-gray-900 text-white"
-                  : ""
+                loginType === "admin" ? "bg-gray-900 text-white" : ""
               }`}
             >
               <Shield size={16} />
@@ -170,7 +146,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
           {!isLogin && (
             <>
               <div className="flex items-center border rounded-xl p-3">
@@ -181,6 +157,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
                   placeholder="Full Name"
                   className="w-full outline-none bg-transparent"
                   required
+                  autoComplete="one-time-code"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({
@@ -199,6 +176,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
                   placeholder="Phone Number"
                   className="w-full outline-none bg-transparent"
                   required
+                  autoComplete="one-time-code"
                   value={formData.phone}
                   onChange={(e) =>
                     setFormData({
@@ -219,6 +197,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
               placeholder="Email"
               className="w-full outline-none bg-transparent"
               required
+              autoComplete="one-time-code"
               value={formData.email}
               onChange={(e) =>
                 setFormData({
@@ -234,7 +213,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
             <input
               type="password"
               name="password"
-              autoComplete={isLogin ? "current-password" : "new-password"}
+              autoComplete="new-password"
               placeholder="Password"
               className="w-full outline-none bg-transparent"
               required
