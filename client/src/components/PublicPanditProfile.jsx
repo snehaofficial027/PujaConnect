@@ -33,22 +33,22 @@ const PublicPanditProfile = ({ onBookClick }) => {
       .catch((err) => console.log(err));
   }, [id]);
 
- const getImage = () => {
-  if (!pandit) return "/images/pandits/pandit1.jpg";
+  const getImage = () => {
+    if (!pandit) return "/images/pandits/pandit1.jpg";
 
-  if (pandit.image) {
-    if (
-      pandit.image.startsWith("http") ||
-      pandit.image.startsWith("/images/")
-    ) {
-      return pandit.image;
+    if (pandit.image) {
+      if (
+        pandit.image.startsWith("http") ||
+        pandit.image.startsWith("/images/")
+      ) {
+        return pandit.image;
+      }
+
+      return `${import.meta.env.VITE_API_URL}/${pandit.image.replace(/^\/+/, "")}`;
     }
 
-    return `${import.meta.env.VITE_API_URL}/${pandit.image.replace(/^\/+/, "")}`;
-  }
-
-  return "/images/pandits/pandit1.jpg";
-};
+    return "/images/pandits/pandit1.jpg";
+  };
 
   if (!pandit) {
     return (
@@ -71,14 +71,15 @@ const PublicPanditProfile = ({ onBookClick }) => {
       <div className="bg-white rounded-3xl shadow-lg overflow-hidden grid lg:grid-cols-2 gap-10 p-8">
 
         <div className="flex justify-center">
-         <img
-  src={getImage()}
-  alt={pandit.name}
-  className="w-full h-[520px] object-cover rounded-3xl"
-  onError={(e) => {
-    e.target.src = "/images/pandits/pandit1.jpg";
-  }}
-/>
+          {/* ✅ object-top ઉમેરવાથી ચહેરો ક્યારેય ઉપરથી કપાશે નહીં */}
+          <img
+            src={getImage()}
+            alt={pandit.name}
+            className="w-full h-[520px] object-cover object-top rounded-3xl"
+            onError={(e) => {
+              e.target.src = "/images/pandits/pandit1.jpg";
+            }}
+          />
         </div>
 
         <div className="flex flex-col justify-between">
@@ -137,7 +138,7 @@ const PublicPanditProfile = ({ onBookClick }) => {
           </div>
 
           <button
-            onClick={() => onBookClick(pandit)}
+            onClick={() => onBookClick && onBookClick(pandit)}
             className="mt-8 w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-xl font-bold"
           >
             Book Pandit
