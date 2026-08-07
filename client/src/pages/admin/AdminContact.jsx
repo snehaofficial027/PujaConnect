@@ -7,7 +7,6 @@ import {
   User,
   Calendar,
   MessageCircle,
-  Search,
 } from "lucide-react";
 
 const AdminContact = () => {
@@ -18,7 +17,6 @@ const AdminContact = () => {
     try {
       const res = await API.get("/api/contact");
 
-      // 🛠️ Safe Extraction: Array ન હોવાથી થતો Crash રોકવા માટે
       const data = res?.data?.messages || res?.data?.contacts || res?.data || [];
       if (Array.isArray(data)) {
         setMessages(data);
@@ -52,7 +50,6 @@ const AdminContact = () => {
     }
   };
 
-  // Safe filtering
   const safeMessages = Array.isArray(messages) ? messages : [];
 
   const filteredMessages = safeMessages.filter((msg) =>
@@ -119,19 +116,15 @@ const AdminContact = () => {
           </div>
         </div>
 
-        {/* Search */}
+        {/* Search Box - Icon Removed */}
         <div className="flex justify-end">
           <div className="relative">
-            <Search
-              size={18}
-              className="absolute left-4 top-3.5 text-gray-400"
-            />
             <input
               type="text"
               placeholder="Search message..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-80 h-12 pl-11 pr-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-80 h-12 px-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
         </div>
