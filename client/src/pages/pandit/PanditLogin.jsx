@@ -14,7 +14,6 @@ const PanditLogin = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -35,54 +34,41 @@ const PanditLogin = () => {
     try {
       setLoading(true);
 
-      const res = await API.post(
-  "/api/pandit-auth/login",
-  {
-    email: formData.email,
-    password: formData.password,
-  }
-);
-      localStorage.setItem(
-  "pandit",
-  JSON.stringify(res.data.pandit)
-);
+      const res = await API.post("/api/pandit-auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
 
-localStorage.setItem(
-  "panditToken",
-  res.data.token
-);
+      // 🛑 જૂનો કોઈપણ યુઝર/પંડિતનો ડેટા સંપૂર્ણ સાફ કરો
+      localStorage.clear();
 
-alert("Login Successful");
+      // ✅ નવો સાચો ડેટા સ્ટોર કરો
+      localStorage.setItem("pandit", JSON.stringify(res.data.pandit));
+      localStorage.setItem("panditToken", res.data.token);
 
-// જો profile complete નથી
-if (!res.data.profileCompleted) {
-  navigate("/pandit/profile");
-} else {
-  navigate("/pandit/dashboard");
-}
+      alert("Login Successful");
 
+      // જો profile complete નથી
+      if (!res.data.profileCompleted) {
+        navigate("/pandit/profile");
+      } else {
+        navigate("/pandit/dashboard");
+      }
     } catch (err) {
-
       alert(
-        err.response?.data?.message ||
-          "Login Failed"
+        err.response?.data?.message || "Login Failed"
       );
-
     } finally {
-
       setLoading(false);
-
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 flex items-center justify-center px-4 py-10">
-
       <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid lg:grid-cols-2">
 
         {/* LEFT */}
         <div className="bg-gradient-to-br from-orange-600 to-orange-500 text-white p-12 flex flex-col justify-center">
-
           <ShieldCheck size={60} />
 
           <h1 className="text-4xl font-black mt-6">
@@ -116,16 +102,12 @@ if (!res.data.profileCompleted) {
               <UserCheck />
               <span>Update Availability</span>
             </div>
-
           </div>
-
         </div>
 
         {/* RIGHT */}
-
         <div className="p-10">
-
-                 <h2 className="text-3xl font-black text-gray-900">
+          <h2 className="text-3xl font-black text-gray-900">
             Pandit Login
           </h2>
 
@@ -136,18 +118,15 @@ if (!res.data.profileCompleted) {
           <form
             onSubmit={handleLogin}
             className="space-y-6"
+            autoComplete="off"
           >
-
             {/* Email */}
-
             <div>
-
               <label className="font-semibold text-gray-700">
                 Email Address
               </label>
 
               <div className="mt-2 flex items-center border rounded-xl px-4">
-
                 <Mail
                   className="text-gray-400"
                   size={20}
@@ -157,26 +136,22 @@ if (!res.data.profileCompleted) {
                   type="email"
                   name="email"
                   required
+                  autoComplete="off"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email"
                   className="w-full p-4 outline-none"
                 />
-
               </div>
-
             </div>
 
             {/* Password */}
-
             <div>
-
               <label className="font-semibold text-gray-700">
                 Password
               </label>
 
               <div className="mt-2 flex items-center border rounded-xl px-4">
-
                 <Lock
                   className="text-gray-400"
                   size={20}
@@ -190,6 +165,7 @@ if (!res.data.profileCompleted) {
                   }
                   name="password"
                   required
+                  autoComplete="new-password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Enter password"
@@ -208,69 +184,56 @@ if (!res.data.profileCompleted) {
                     <Eye size={20} />
                   )}
                 </button>
-
               </div>
-
             </div>
-                        <button
+
+            <button
               type="submit"
               disabled={loading}
               className="w-full bg-orange-600 hover:bg-orange-700 transition text-white py-4 rounded-xl font-bold text-lg disabled:opacity-60"
             >
               {loading ? "Logging in..." : "Login to Dashboard"}
             </button>
-
           </form>
 
           <div className="text-center mt-6">
-
-  <p className="text-gray-600">
-
-    Don't have a Pandit account?
-
-    <button
-      type="button"
-      onClick={() => navigate("/pandit/signup")}
-      className="ml-2 text-orange-600 font-bold hover:underline"
-    >
-      Become a Pandit
-    </button>
-
-  </p>
-
-</div>
-
-          <div className="mt-8 bg-gray-50 border rounded-2xl p-5">
-
-  <h3 className="font-bold text-gray-800">
-    Secure Pandit Portal
-  </h3>
-
-  <div className="text-center mt-6">
-
-  <button
-    type="button"
-    onClick={() => navigate("/")}
-    className="text-gray-500 hover:text-orange-600 font-medium"
-  >
-    ← Back to Home
-  </button>
-
-</div>
-
-  <p className="text-sm text-gray-600 mt-2 leading-7">
-    This portal is exclusively for verified PujaConnect Pandits.
-    Please sign in using the credentials provided by the
-    PujaConnect Administration Team.
-  </p>
-
-</div>
-            </div>
-
+            <p className="text-gray-600">
+              Don't have a Pandit account?
+              <button
+                type="button"
+                onClick={() => navigate("/pandit/signup")}
+                className="ml-2 text-orange-600 font-bold hover:underline"
+              >
+                Become a Pandit
+              </button>
+            </p>
           </div>
 
+          <div className="mt-8 bg-gray-50 border rounded-2xl p-5">
+            <h3 className="font-bold text-gray-800">
+              Secure Pandit Portal
+            </h3>
+
+            <div className="text-center mt-6">
+              <button
+                type="button"
+                onClick={() => navigate("/")}
+                className="text-gray-500 hover:text-orange-600 font-medium"
+              >
+                ← Back to Home
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-600 mt-2 leading-7">
+              This portal is exclusively for verified PujaConnect Pandits.
+              Please sign in using the credentials provided by the
+              PujaConnect Administration Team.
+            </p>
+          </div>
         </div>
 
+      </div>
+    </div>
   );
 };
 

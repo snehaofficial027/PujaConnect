@@ -18,12 +18,15 @@ const PanditSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // ✅ Logout થતી વખતે જૂનો બધો ડેટા ક્લિયર કરી ફ્રેશ પેજ લોડ થશે
   const handleLogout = () => {
-  localStorage.removeItem("pandit");
-  localStorage.removeItem("panditToken");
+    localStorage.removeItem("pandit");
+    localStorage.removeItem("panditToken");
+    localStorage.clear(); // સંપૂર્ણ કેશ સાફ કરવા માટે
 
-  navigate("/pandit/login");
-};
+    // window.location.href થી React State સાફ થશે અને Auto-fill વગરનું ખાલી ફોર્મ આવશે
+    window.location.href = "/pandit/login";
+  };
 
   const menuItems = [
 
@@ -122,7 +125,7 @@ const PanditSidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
         <div className="py-6 px-4 space-y-2">
 
-                  {menuItems.map((item) => (
+          {menuItems.map((item) => (
 
             <Link
               key={item.title}
