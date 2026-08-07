@@ -30,7 +30,7 @@ const AdminBookings = () => {
       if (res.data.success || res.data.bookings) {
         const rawBookings = res.data.bookings || res.data || [];
         
-        // 🛠️ Automatic Auto-Mark Cash Completed Bookings as "Paid"
+        // 🛠️ Automatic Auto-Mark Cash Completed / Past Bookings as "Paid"
         const todayStr = new Date().toISOString().split("T")[0];
 
         const processed = rawBookings.map((b) => {
@@ -71,13 +71,17 @@ const AdminBookings = () => {
     (b) => b.status === "Completed"
   ).length;
 
-  // 💰 Completed & Paid બુકિંગનો રેવેન્યુ
+  // 💰 Completed અથવા Paid હોય તેવા તમામ બુકિંગ્સનો સાચો રેવેન્યુ
   const totalRevenue = bookings
-    .filter((b) => b.status === "Completed" || b.paymentStatus === "Paid")
-    .reduce(
-      (sum, b) => sum + Number(b.price || b.amount || 0),
-      0
-    );
+    .filter(
+      (b) =>
+        b.status === "Completed" ||
+        String(b.paymentStatus).toLowerCase() === "paid"
+    )
+    .reduce((sum, b) => {
+      const val = Number(b.price || b.amount || b.pujaprice || 0);
+      return sum + val;
+    }, 0);
 
   return (
     <AdminLayout>
@@ -181,13 +185,13 @@ const AdminBookings = () => {
                       </td>
 
                       <td className="p-4 text-center font-bold text-green-600">
-                        ₹{booking.price || booking.amount}
+                        ₹{booking.price || booking.amount || 0}
                       </td>
 
                       <td className="p-4 text-center">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-bold ${
-                            booking.paymentStatus === "Paid"
+                            String(booking.paymentStatus).toLowerCase() === "paid"
                               ? "bg-green-100 text-green-700"
                               : booking.paymentStatus === "Refunded"
                               ? "bg-red-100 text-red-700"
