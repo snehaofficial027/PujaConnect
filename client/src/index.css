@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
-/* Global Reset */
 * {
   margin: 0;
   padding: 0;
@@ -11,46 +10,15 @@
 
 html {
   scroll-behavior: smooth;
-  width: 100%;
-  overflow-x: hidden;
 }
 
-html,
-body {
-  width: 100%;
-  min-width: 0;
+html, body {
   overscroll-behavior: none;
-  overflow-x: hidden;
 }
 
 body {
   background: #fffdf8;
   color: #1f2937;
-  width: 100%;
-  min-width: 0;
-}
-
-/* React root must always use full viewport width */
-#root {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-}
-
-/* Prevent any section from becoming wider than screen */
-section,
-main,
-nav,
-footer,
-header {
-  max-width: 100%;
-}
-
-/* Images should never overflow their containers */
-img {
-  max-width: 100%;
 }
 
 a {
@@ -59,9 +27,4 @@ a {
 
 button {
   cursor: pointer;
-}
-
-/* Prevent horizontal overflow */
-* {
-  max-width: 100%;
 }
