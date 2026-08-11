@@ -18,7 +18,7 @@ const panditAvailabilityRoutes = require("./routes/panditAvailabilityRoutes");
 const panditProfileRoutes = require("./routes/panditProfileRoutes");
 const passport = require("passport");
 const session = require("express-session");
-
+const pujaRoutes = require("./routes/pujaRoutes");
 
 const path = require("path");
 const app = express();
@@ -41,29 +41,45 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ⚡ GLOBAL MIDDLEWARE (ફક્ત એક જ વાર પ્રોપર સેટિંગ સાથે)
+// ⚡ GLOBAL CORS FIX
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:3000",
   "https://puja-connect-beta.vercel.app",
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin) || origin.startsWith("http://localhost")) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(null, true);
       }
     },
     credentials: true,
   })
 );
-app.use(express.json());
 
+// ⚡ FORM DATA & JSON PARSERS
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// 🎯 STATIC DIRECTORIES (આ જ અસલી સોલ્યુશન છે)
+// 1. Static Public Images
 app.use(
   "/images",
   express.static(path.join(__dirname, "public/images"))
+);
+app.use(
+  "/images",
+  express.static(path.join(__dirname, "../client/public/images"))
+);
+
+// 2. ⚡ Uploaded Images Route (Admin દ્વારા અપલોડ થતી ઈમેજો માટે)
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "public/uploads"))
 );
 
 // API Routes
@@ -80,12 +96,8 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/pandit/earnings", panditEarningRoutes);
 app.use("/api/pandit/availability", panditAvailabilityRoutes);
-app.use("/api/pandit/profile",panditProfileRoutes);
-app.use(
-  "/images",
-  express.static(path.join(__dirname, "../client/public/images"))
-);
-
+app.use("/api/pandit/profile", panditProfileRoutes);
+app.use("/api/pujas", pujaRoutes);
 
 // Base Route
 app.get('/', (req, res) => {

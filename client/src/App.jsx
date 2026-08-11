@@ -47,6 +47,9 @@ import PublicPanditProfile from "./components/PublicPanditProfile";
 import PanditProfile from "./pages/pandit/PanditProfile";
 import PanditSettings from "./pages/pandit/PanditSettings";
 import GoogleSuccess from "./pages/GoogleSuccess";
+import ServiceDetails from "./pages/ServiceDetails";
+import PublicPujaDetails from "./components/PublicPujaDetails";
+import AdminPujas from "./pages/admin/AdminPujas";
 
 function App() {
 
@@ -301,6 +304,27 @@ element={<PanditEarnings/>}
     />
   }
 />
+
+<Route
+  path="/services/:id"
+  element={
+    <ServiceDetails
+      onBookClick={handleBookingClick}
+    />
+  }
+/>
+
+<Route
+  path="/services/:id"
+  element={
+    <PublicPujaDetails
+      onBookClick={handleBookingClick}
+    />
+  }
+/>
+
+<Route path="/admin/pujas" element={<AdminPujas />} />
+
       </Routes>
             {isModalOpen && (
         <BookingModal

@@ -1,29 +1,21 @@
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
 
-// Folder path
-const uploadPath = path.join(
-  __dirname,
-  "../../client/public/images/pandits"
-);
+const storage = multer.memoryStorage();
 
-// Folder ન હોય તો બનાવી દો
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
-}
+const upload = multer({
+  storage: storage,
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadPath);
+  limits: {
+    fileSize: 5 * 1024 * 1024,
   },
 
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      Date.now() + path.extname(file.originalname)
-    );
+  fileFilter: (req, file, cb) => {
+    if (file && file.mimetype && file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only image files are allowed"));
+    }
   },
 });
 
-module.exports = multer({ storage });
+module.exports = upload;

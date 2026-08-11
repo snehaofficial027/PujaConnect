@@ -7,6 +7,7 @@ import {
   CalendarCheck,
   IndianRupee,
   MessageSquare,
+  Sparkles,
   LogOut,
   ChevronRight,
 } from "lucide-react";
@@ -30,6 +31,11 @@ const AdminSidebar = () => {
       label: "Pandits",
       path: "/admin/pandits",
       icon: UserCheck,
+    },
+    {
+      label: "Manage Pujas", // 👈 🆕 નવું પૂજા મેનેજમેન્ટ મેનૂ
+      path: "/admin/pujas",
+      icon: Sparkles,
     },
     {
       label: "Bookings",
@@ -58,28 +64,21 @@ const AdminSidebar = () => {
     <aside className="fixed top-0 left-0 w-72 h-screen bg-white border-r shadow-lg flex flex-col z-50">
 
       {/* Logo */}
-
       <div className="px-7 py-6 border-b flex-shrink-0">
-
         <h1 className="text-3xl font-black text-orange-600">
           PujaConnect
         </h1>
-
         <p className="text-sm text-gray-500 mt-1">
           Admin Dashboard
         </p>
-
       </div>
 
       {/* Navigation */}
-
       <nav className="flex-1 overflow-y-auto px-4 py-5 space-y-2">
-
         {navItems.map((item) => {
           const Icon = item.icon;
 
-          const isActive =
-            location.pathname === item.path;
+          const isActive = location.pathname === item.path;
 
           return (
             <Link
@@ -92,7 +91,6 @@ const AdminSidebar = () => {
               }`}
             >
               <div className="flex items-center gap-3">
-
                 <div
                   className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                     isActive
@@ -106,7 +104,6 @@ const AdminSidebar = () => {
                 <span className="font-semibold">
                   {item.label}
                 </span>
-
               </div>
 
               <ChevronRight
@@ -117,17 +114,13 @@ const AdminSidebar = () => {
                     : "text-gray-400 group-hover:text-orange-500"
                 }
               />
-
             </Link>
           );
         })}
-
       </nav>
 
       {/* Logout */}
-
       <div className="p-5 border-t bg-white flex-shrink-0">
-
         <button
           onClick={handleLogout}
           className="w-full rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold py-3 flex items-center justify-center gap-3 transition"
@@ -135,7 +128,6 @@ const AdminSidebar = () => {
           <LogOut size={20} />
           Logout
         </button>
-
       </div>
 
     </aside>
