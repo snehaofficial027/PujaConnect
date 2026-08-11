@@ -15,19 +15,20 @@ import Footer from "../components/Footer";
 const Home = ({ onBookClick, searchCity, onSearchTrigger }) => {
   const [pandits, setPandits] = useState([]);
 
- useEffect(() => {
-  API.get("/api/pandits")
-    .then((res) => {
-      // Home page પર માત્ર પહેલા 4 pandits બતાવ
-      setPandits(res.data.slice(0, 4));
-    })
-    .catch((err) => {
-      console.log("Error fetching pandits:", err);
-    });
-}, []);
+  useEffect(() => {
+    API.get("/api/pandits")
+      .then((res) => {
+        // Home page પર માત્ર પહેલા 4 pandits બતાવ
+        setPandits(res.data.slice(0, 4));
+      })
+      .catch((err) => {
+        console.log("Error fetching pandits:", err);
+      });
+  }, []);
 
   return (
     <>
+      {/* ================= HERO ================= */}
       <Hero
         onBookClick={() =>
           onBookClick({
@@ -36,41 +37,66 @@ const Home = ({ onBookClick, searchCity, onSearchTrigger }) => {
         }
       />
 
-      <div className="py-24">
-        <SearchBooking onSearchTrigger={onSearchTrigger} />
-      </div>
+      {/* ================= SEARCH ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <SearchBooking onSearchTrigger={onSearchTrigger} />
+        </div>
+      </section>
 
-      <div className="py-24">
-        <PopularPujas onBookClick={onBookClick} />
-      </div>
+      {/* ================= POPULAR PUJAS ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <PopularPujas onBookClick={onBookClick} />
+        </div>
+      </section>
 
-      <div className="py-24 bg-gray-50">
-        <FeaturedPandits
-pandits={pandits}
-onBookClick={onBookClick}
-/>
-      </div>
+      {/* ================= FEATURED PANDITS ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <FeaturedPandits
+            pandits={pandits}
+            onBookClick={onBookClick}
+          />
+        </div>
+      </section>
 
-      <div className="py-24">
-        <WhyChooseUs />
-      </div>
+      {/* ================= WHY CHOOSE US ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <WhyChooseUs />
+        </div>
+      </section>
 
-      <div className="py-24 bg-orange-50">
-        <Testimonials />
-      </div>
+      {/* ================= TESTIMONIALS ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 bg-orange-50 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <Testimonials />
+        </div>
+      </section>
 
-      <div className="py-24">
-        <Achievements />
-      </div>
+      {/* ================= ACHIEVEMENTS ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <Achievements />
+        </div>
+      </section>
 
-      <div className="py-24">
-        <HowItWorks />
-      </div>
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <HowItWorks />
+        </div>
+      </section>
 
-      <div className="py-24">
-        <FAQ />
-      </div>
+      {/* ================= FAQ ================= */}
+      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <FAQ />
+        </div>
+      </section>
 
+      {/* ================= FOOTER ================= */}
       <Footer />
     </>
   );
