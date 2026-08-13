@@ -5,7 +5,7 @@ import { Search, MapPin, Calendar, BookOpen, Home } from "lucide-react";
 const SearchBooking = ({ onSearchTrigger }) => {
   const navigate = useNavigate();
 
-  // 🎯 સ્ટેટને બાય-ડિફોલ્ટ ખાલી રાખવામાં આવી છે
+  // 🎯 ૧૦૦% ખાલી સ્ટેટ
   const [city, setCity] = useState("");
   const [puja, setPuja] = useState("");
   const [date, setDate] = useState("");
@@ -39,29 +39,33 @@ const SearchBooking = ({ onSearchTrigger }) => {
           </p>
         </div>
 
-        {/* Search Form */}
-        <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+        {/* Search Form (autoComplete="off" જેથી બ્રાઉઝર પોતે લખાણ ના ભરે) */}
+        <form onSubmit={handleSearch} autoComplete="off" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
           
-          {/* City */}
+          {/* City Input */}
           <div>
             <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
               <MapPin size={14} className="text-orange-500" /> City
             </label>
             <input
               type="text"
+              name="search_city_field"
+              id="search_city_field"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="e.g. Ahmedabad, Vadodara"
+              autoComplete="new-password"
               className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium placeholder-gray-400"
             />
           </div>
 
-          {/* Puja */}
+          {/* Puja Select */}
           <div>
             <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
               <BookOpen size={14} className="text-orange-500" /> Puja
             </label>
             <select
+              name="search_puja_field"
               value={puja}
               onChange={(e) => setPuja(e.target.value)}
               className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium text-gray-700"
@@ -76,7 +80,7 @@ const SearchBooking = ({ onSearchTrigger }) => {
             </select>
           </div>
 
-          {/* Date */}
+          {/* Date Input */}
           <div>
             <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
               <Calendar size={14} className="text-orange-500" /> Date
@@ -89,7 +93,7 @@ const SearchBooking = ({ onSearchTrigger }) => {
             />
           </div>
 
-          {/* Puja Mode */}
+          {/* Puja Mode Select */}
           <div>
             <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
               <Home size={14} className="text-orange-500" /> Puja Mode
