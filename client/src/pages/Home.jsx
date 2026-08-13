@@ -27,33 +27,36 @@ const Home = ({ onBookClick, searchCity, onSearchTrigger }) => {
   }, []);
 
   return (
-    <>
+    <div className="w-full min-h-screen overflow-x-hidden flex flex-col items-center justify-center bg-white">
+      
       {/* ================= HERO ================= */}
-      <Hero
-        onBookClick={() =>
-          onBookClick({
-            name: "General Puja",
-          })
-        }
-      />
+      <div className="w-full">
+        <Hero
+          onBookClick={() =>
+            onBookClick({
+              name: "General Puja",
+            })
+          }
+        />
+      </div>
 
       {/* ================= SEARCH ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <SearchBooking onSearchTrigger={onSearchTrigger} />
         </div>
       </section>
 
       {/* ================= POPULAR PUJAS ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-gray-50/50 px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <PopularPujas onBookClick={onBookClick} />
         </div>
       </section>
 
       {/* ================= FEATURED PANDITS ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-gray-50 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-white px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <FeaturedPandits
             pandits={pandits}
             onBookClick={onBookClick}
@@ -62,43 +65,46 @@ const Home = ({ onBookClick, searchCity, onSearchTrigger }) => {
       </section>
 
       {/* ================= WHY CHOOSE US ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-gray-50/50 px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <WhyChooseUs />
         </div>
       </section>
 
       {/* ================= TESTIMONIALS ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-orange-50 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-orange-50/60 px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <Testimonials />
         </div>
       </section>
 
       {/* ================= ACHIEVEMENTS ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-white px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <Achievements />
         </div>
       </section>
 
       {/* ================= HOW IT WORKS ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-gray-50/50 px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <HowItWorks />
         </div>
       </section>
 
       {/* ================= FAQ ================= */}
-      <section className="py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="w-full py-12 sm:py-16 lg:py-20 bg-white px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-7xl mx-auto flex justify-center">
           <FAQ />
         </div>
       </section>
 
       {/* ================= FOOTER ================= */}
-      <Footer />
-    </>
+      <div className="w-full">
+        <Footer />
+      </div>
+
+    </div>
   );
 };
 

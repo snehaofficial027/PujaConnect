@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const Hero = ({ onBookClick = () => {} }) => {
   return (
     <section
-      className="relative min-h-[70vh] sm:min-h-[75vh] lg:min-h-[80vh] flex items-center bg-no-repeat"
+     className="relative w-full min-h-[70vh] sm:min-h-[75vh] lg:min-h-[80vh] flex items-center bg-no-repeat overflow-hidden"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.55)), url('/images/hero-bg.jpg')",

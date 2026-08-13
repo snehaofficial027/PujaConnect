@@ -12,13 +12,98 @@ html {
   scroll-behavior: smooth;
 }
 
-html, body {
+html,
+body {
   overscroll-behavior: none;
+  width: 100%;
+  min-width: 0;
 }
 
 body {
   background: #fffdf8;
   color: #1f2937;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-width: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+  width: 100%;
+  min-width: 0;
+}
+
+body {
+  background: #fffdf8;
+  color: #1f2937;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-width: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+  width: 100%;
+  min-width: 0;
+}
+
+body {
+  background: #fffdf8;
+  color: #1f2937;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-width: 0;
 }
 
 a {

@@ -1,140 +1,124 @@
-import { useState } from "react";
-import {
-  CalendarDays,
-  MapPin,
-  Search,
-} from "lucide-react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Search, MapPin, Calendar, BookOpen, Home } from "lucide-react";
 
-const SearchBooking = ({ onSearchTrigger = () => {} }) => {
-  const [cityInput, setCityInput] = useState("");
+const SearchBooking = ({ onSearchTrigger }) => {
+  const navigate = useNavigate();
 
-  const handleSearchSubmit = (e) => {
+  const [city, setCity] = useState("Ahmedabad");
+  const [puja, setPuja] = useState("Ganesh Puja");
+  const [date, setDate] = useState("");
+  const [pujaMode, setPujaMode] = useState("Home Puja");
+
+  const handleSearch = (e) => {
     e.preventDefault();
 
-    onSearchTrigger(cityInput.trim());
+    const searchParams = { city, puja, date, pujaMode };
 
-    const element =
-      document.getElementById("featured-pandits");
-
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
+    // 1. જો Parent Component (Home.jsx) એ કોઈ Function આપ્યું હોય તો તે Run થશે
+    if (onSearchTrigger) {
+      onSearchTrigger(searchParams);
     }
+
+    // 2. 🚀 યુઝરને Search Results સાથે Pandits/Services પેજ પર Redirect કરશે
+    navigate("/pandits", {
+      state: { searchParams },
+    });
   };
 
   return (
-    <section className="w-full bg-gray-50/50 py-10 sm:py-12 md:py-16 flex justify-center items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center justify-center">
+    <div className="w-full max-w-6xl mx-auto px-4 -mt-16 sm:-mt-20 relative z-20">
+      <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 sm:p-8 backdrop-blur-md">
+        
+        {/* Title */}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+            Find Your Perfect Puja
+          </h2>
+          <p className="text-gray-500 text-xs sm:text-sm mt-1">
+            Search verified pandits for Home, Temple or Online Puja.
+          </p>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 sm:p-6 md:p-8 w-full max-w-6xl"
-        >
-          {/* Heading */}
-          <div className="text-center mb-6 sm:mb-8">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800">
-              Find Your Perfect Puja
-            </h2>
-
-            <p className="text-gray-500 text-xs sm:text-sm mt-2 px-2">
-              Search verified pandits for Home, Temple or Online Puja.
-            </p>
+        {/* Search Form */}
+        <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+          
+          {/* City */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
+              <MapPin size={14} className="text-orange-500" /> City
+            </label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="e.g. Ahmedabad, Vadodara"
+              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium"
+            />
           </div>
 
-          {/* Search Form */}
-          <form
-            onSubmit={handleSearchSubmit}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"
-          >
-            {/* City */}
-            <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold uppercase text-gray-600">
-                City
-              </label>
+          {/* Puja */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
+              <BookOpen size={14} className="text-orange-500" /> Puja
+            </label>
+            <select
+              value={puja}
+              onChange={(e) => setPuja(e.target.value)}
+              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium"
+            >
+              <option value="Ganesh Puja">Ganesh Puja</option>
+              <option value="Satyanarayan Puja">Satyanarayan Puja</option>
+              <option value="Maha Mrityunjaya Jaap">Maha Mrityunjaya Jaap</option>
+              <option value="Rudrabhishek">Rudrabhishek</option>
+              <option value="Griha Pravesh">Griha Pravesh</option>
+              <option value="Vastu Shanti">Vastu Shanti</option>
+            </select>
+          </div>
 
-              <div className="flex items-center border rounded-xl px-3 py-2.5 bg-gray-50 min-w-0">
-                <MapPin
-                  size={16}
-                  className="text-orange-500 flex-shrink-0"
-                />
+          {/* Date */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
+              <Calendar size={14} className="text-orange-500" /> Date
+            </label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium text-gray-700"
+            />
+          </div>
 
-                <input
-                  type="text"
-                  placeholder="Ahmedabad..."
-                  value={cityInput}
-                  onChange={(e) =>
-                    setCityInput(e.target.value)
-                  }
-                  className="w-full min-w-0 ml-2 bg-transparent outline-none text-sm"
-                />
-              </div>
-            </div>
+          {/* Puja Mode */}
+          <div>
+            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1">
+              <Home size={14} className="text-orange-500" /> Puja Mode
+            </label>
+            <select
+              value={pujaMode}
+              onChange={(e) => setPujaMode(e.target.value)}
+              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium"
+            >
+              <option value="Home Puja">Home Puja</option>
+              <option value="Temple Puja">Temple Puja</option>
+              <option value="Online Puja">Online Puja</option>
+            </select>
+          </div>
 
-            {/* Puja */}
-            <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold uppercase text-gray-600">
-                Puja
-              </label>
+          {/* Submit Button */}
+          <div className="lg:col-span-4 mt-2">
+            <button
+              type="submit"
+              className="w-full h-12 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm"
+            >
+              <Search size={18} /> Search Now
+            </button>
+          </div>
 
-              <select className="w-full border rounded-xl px-3 py-2.5 bg-gray-50 text-sm outline-none">
-                <option>Ganesh Puja</option>
-                <option>Satyanarayan Puja</option>
-                <option>Griha Pravesh</option>
-                <option>Rudrabhishek</option>
-              </select>
-            </div>
+        </form>
 
-            {/* Date */}
-            <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold uppercase text-gray-600">
-                Date
-              </label>
-
-              <div className="flex items-center border rounded-xl px-3 py-2.5 bg-gray-50 min-w-0">
-                <CalendarDays
-                  size={16}
-                  className="text-orange-500 flex-shrink-0"
-                />
-
-                <input
-                  type="date"
-                  className="w-full min-w-0 ml-2 bg-transparent outline-none text-sm"
-                />
-              </div>
-            </div>
-
-            {/* Puja Mode */}
-            <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold uppercase text-gray-600">
-                Puja Mode
-              </label>
-
-              <select className="w-full border rounded-xl px-3 py-2.5 bg-gray-50 text-sm outline-none">
-                <option>🏠 Home Puja</option>
-                <option>🛕 Temple Puja</option>
-                <option>💻 Online Puja</option>
-              </select>
-            </div>
-
-            {/* Search Button */}
-            <div className="flex items-end">
-              <button
-                type="submit"
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white rounded-xl py-3 font-semibold flex justify-center items-center gap-2 transition active:scale-[0.98]"
-              >
-                <Search size={16} />
-                <span>Search Now</span>
-              </button>
-            </div>
-          </form>
-        </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 
