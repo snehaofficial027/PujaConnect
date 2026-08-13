@@ -5,8 +5,9 @@ import { Search, MapPin, Calendar, BookOpen, Home } from "lucide-react";
 const SearchBooking = ({ onSearchTrigger }) => {
   const navigate = useNavigate();
 
-  const [city, setCity] = useState("Ahmedabad");
-  const [puja, setPuja] = useState("Ganesh Puja");
+  // 🎯 સ્ટેટને બાય-ડિફોલ્ટ ખાલી રાખવામાં આવી છે
+  const [city, setCity] = useState("");
+  const [puja, setPuja] = useState("");
   const [date, setDate] = useState("");
   const [pujaMode, setPujaMode] = useState("Home Puja");
 
@@ -15,12 +16,10 @@ const SearchBooking = ({ onSearchTrigger }) => {
 
     const searchParams = { city, puja, date, pujaMode };
 
-    // 1. જો Parent Component (Home.jsx) એ કોઈ Function આપ્યું હોય તો તે Run થશે
     if (onSearchTrigger) {
       onSearchTrigger(searchParams);
     }
 
-    // 2. 🚀 યુઝરને Search Results સાથે Pandits/Services પેજ પર Redirect કરશે
     navigate("/pandits", {
       state: { searchParams },
     });
@@ -53,7 +52,7 @@ const SearchBooking = ({ onSearchTrigger }) => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="e.g. Ahmedabad, Vadodara"
-              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium"
+              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium placeholder-gray-400"
             />
           </div>
 
@@ -65,8 +64,9 @@ const SearchBooking = ({ onSearchTrigger }) => {
             <select
               value={puja}
               onChange={(e) => setPuja(e.target.value)}
-              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium"
+              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium text-gray-700"
             >
+              <option value="">Select Puja...</option>
               <option value="Ganesh Puja">Ganesh Puja</option>
               <option value="Satyanarayan Puja">Satyanarayan Puja</option>
               <option value="Maha Mrityunjaya Jaap">Maha Mrityunjaya Jaap</option>
@@ -97,7 +97,7 @@ const SearchBooking = ({ onSearchTrigger }) => {
             <select
               value={pujaMode}
               onChange={(e) => setPujaMode(e.target.value)}
-              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium"
+              className="w-full h-11 px-3 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-orange-500 font-medium text-gray-700"
             >
               <option value="Home Puja">Home Puja</option>
               <option value="Temple Puja">Temple Puja</option>
